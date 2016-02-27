@@ -1,0 +1,9 @@
+{
+  "name": "limbero-today",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*"
+  }
+}
