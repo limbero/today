@@ -1,4 +1,14 @@
-var apikeys = require('./apikeys.json');
+try {
+  var apikeys = require('./apikeys.json');
+} catch (e) {
+  var apikeys = {
+    trakt_tv: {
+      client_id: process.env.TRAKT_CLIENT_ID,
+      client_secret: process.env.TRAKT_CLIENT_SECRET
+    },
+    forecast_io: process.env.FORECAST_IO_APIKEY
+  }
+}
 
 var bodyParser = require('body-parser');
 var request = require('request');
@@ -57,7 +67,7 @@ app.get('/calendar', function (req, res) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token.access_token,
             'trakt-api-version': '2',
-            'trakt-api-key': process.env.TRAKT_CLIENT_ID || apikeys.trakt_tv.client_id
+            'trakt-api-key': apikeys.trakt_tv.client_id
           }
         }, function (error, response, body) {
           if (!error && response.statusCode === 200) {
@@ -80,7 +90,7 @@ app.get('/calendar', function (req, res) {
 app.get('/traktauth', function (req, res) {
   res.redirect( 'https://trakt.tv/oauth/authorize' +
                 '?response_type=code' +
-                '&client_id=' + (process.env.TRAKT_CLIENT_ID || apikeys.trakt_tv.client_id) +
+                '&client_id=' + apikeys.trakt_tv.client_id +
                 '&redirect_uri=' + server_url+'/traktauthcallback' +
                 '&state=' );
 });
@@ -93,8 +103,8 @@ app.get('/traktauthcallback', function (req, res) {
       json: true,
       body: {
         code: req.query.code,
-        client_id: process.env.TRAKT_CLIENT_ID || apikeys.trakt_tv.client_id,
-        client_secret: process.env.TRAKT_CLIENT_SECRET || apikeys.trakt_tv.client_secret,
+        client_id: apikeys.trakt_tv.client_id,
+        client_secret: apikeys.trakt_tv.client_secret,
         redirect_uri: server_url+'/traktauthcallback',
         grant_type: 'authorization_code'
       }
