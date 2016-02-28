@@ -24,7 +24,7 @@ mongo_client.connect(mongo_url, function(err, db) {
   mongo_db = db;
 });
 
-var session_secret = "Axels1Hemliga2Grej3Hahaha4";
+var session_secret = process.env.SESSION_SECRET || "Axels1Hemliga2Grej3Hahaha4";
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var mongo_store = require('connect-mongo')(session);
