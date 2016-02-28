@@ -131,8 +131,9 @@ var server = app.listen(webport, function () {
 
   server_url += (host === '::' ? 'localhost' : host);
   server_url += (port == 80 ? '' : ':'+port);
+  server_url = process.env.PUBLIC_URL || server_url;
 
-  console.log('idag listening at http://%s:%s', host, port);
+  console.log('idag listening at %s', server_url);
 })
 
 function randomString() {
