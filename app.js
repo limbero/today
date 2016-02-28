@@ -42,7 +42,17 @@ app.use(session({
 }));
 
 app.get('/', function (req, res) {
-  res.render('index');
+  mongo_db.collection('trakt_sessions', function(err, collection) {
+    collection.findOne({session_id:req.session.id}, function(err, item) {
+      var config = {};
+      if(item === null) {
+        config.tvstring = '<a href="/traktauth">logga in med trakt</a> för att se vad som går på tv';
+      } else {
+        config.tvstring = '&nbsp;';
+      }
+      res.render('index', {config: config});
+    });
+  });
 });
 
 app.get('/calendar', function (req, res) {
