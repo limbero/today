@@ -4,6 +4,12 @@
   "private": "true",
   "dependencies": {
     "body-parser": "*",
-    "express": "*"
+    "connect-mongo": "*",
+    "cookie-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-session": "*",
+    "mongodb": "*",
+    "request": "*"
   }
 }

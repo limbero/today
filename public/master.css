@@ -1,0 +1,46 @@
+body {
+  background: #222;
+  color: #EEE;
+
+  font-family: Helvetica Neue;
+  font-weight: 300;
+  font-size: 30px;
+
+  text-align: center;
+
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+a {
+  text-decoration: none;
+  background: #FFF;
+  color: #222;
+
+  padding: 4px 8px 6px;
+  transition: background 0.25s;
+}
+a:hover {
+  background: #AAA;
+  transition: background 0.25s;
+}
+
+body.daylight {
+  background: #FFF;
+  color: #222;
+}
+body.daylight a {
+  background: #222;
+  color: #EEE;
+}
+body.daylight a:hover {
+  background: #666;
+}
+
+#main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+}
