@@ -31,7 +31,7 @@ var mongo_store = require('connect-mongo')(session);
 
 var express = require('express');
 var app = express();
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(session({
@@ -122,7 +122,7 @@ app.get('/traktauthcallback', function (req, res) {
       if(!error && response.statusCode === 200) {
         mongo_db.collection('trakt_sessions', function(err, collection) {
           collection.insert({session_id: req.session.id, token: body}, function(err, result) {});
-        })
+        });
         res.redirect('/?traktauth=success');
       } else {
         res.redirect('/?traktauth=failure');
@@ -144,12 +144,4 @@ var server = app.listen(webport, function () {
   server_url = process.env.PUBLIC_URL || server_url;
 
   console.log('idag listening at %s', server_url);
-})
-
-function randomString() {
-  var length = 64
-  var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-  var result = ''
-  for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))]
-  return result
-}
+});
