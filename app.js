@@ -89,7 +89,7 @@ app.get('/calendar', function (req, res) {
             }
             res.send(shows);
           } else {
-            res.status(500).json( { 'error': -2} );
+            res.status(500).send([]);
             console.log(response.statusCode, response.statusMessage);
           }
         });
