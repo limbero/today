@@ -63,12 +63,13 @@ app.get('/calendar', function (req, res) {
       } else {
         var token = item.token;
         var now = new Date();
+        now.setDate(now.getDate()-1);
         if (now.getHours() >= 22) {
           now.setDate(now.getDate()+1);
         }
         var now_string = now.getFullYear() + '-' +
                         (now.getMonth() < 9 ? '0'+(now.getMonth()+1) : now.getMonth()+1) + '-' +
-                        (now.getDate() < 9 ? '0'+(now.getDate()-1) : now.getDate()-1);
+                        (now.getDate() < 9 ? '0'+(now.getDate()) : now.getDate());
         request({
           method: 'GET',
           url: 'https://api-v2launch.trakt.tv/calendars/my/shows/'+now_string+'/1',
