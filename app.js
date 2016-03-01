@@ -89,7 +89,7 @@ app.get('/calendar', function (req, res) {
             }
             res.send(shows);
           } else {
-            res.status(500).send([]);
+            res.send([]);
             console.log(response.statusCode, response.statusMessage);
           }
         });
