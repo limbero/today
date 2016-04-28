@@ -56,7 +56,7 @@ document.onreadystatechange = function () {
     var nowday = today.getDate();
     nowday = (nowday < 10 ? '0'+nowday : nowday);
 
-    var nowdateparam =  = nowyear + '-' + nowmonth + '-' + nowday;
+    var nowdateparam = nowyear + '-' + nowmonth + '-' + nowday;
     var nowhoursparam = today.getHours();
 
     xhr.open('GET', 'calendar?nowdate='+nowdateparam+'&nowhours='+nowhoursparam);
