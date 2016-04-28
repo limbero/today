@@ -65,9 +65,9 @@ app.get('/calendar', function (req, res) {
         var now = new Date();
 
         var nowyear = now.getUTCFullYear();
-        var nowmonth = dateObj.getUTCMonth() + 1;
+        var nowmonth = now.getUTCMonth() + 1;
         nowmonth = (nowmonth < 10 ? '0'+nowmonth : nowmonth);
-        var nowday = dateObj.getUTCDate();
+        var nowday = now.getUTCDate();
         nowday = (nowday < 10 ? '0'+nowday : nowday);
 
         now = new Date(nowyear + '-' + nowmonth + '-' + nowday);
