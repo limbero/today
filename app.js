@@ -63,7 +63,16 @@ app.get('/calendar', function (req, res) {
       } else {
         var token = item.token;
         var now = new Date();
-        now.setDate(now.getDate()-1);
+
+        var nowyear = now.getUTCFullYear();
+        var nowmonth = dateObj.getUTCMonth() + 1;
+        nowmonth = (nowmonth < 10 ? '0'+nowmonth : nowmonth);
+        var nowday = dateObj.getUTCDate();
+        nowday = (nowday < 10 ? '0'+nowday : nowday);
+
+        now = new Date(nowyear + '-' + nowmonth + '-' + nowday);
+
+        //now.setDate(now.getDate()-1);
         if (now.getHours() >= 22) {
           now.setDate(now.getDate()+1);
         }
