@@ -49,7 +49,17 @@ document.onreadystatechange = function () {
         }
       }
     }
-    xhr.open('GET', 'calendar');
+
+    var nowyear = today.getFullYear();
+    var nowmonth = today.getMonth() + 1;
+    nowmonth = (nowmonth < 10 ? '0'+nowmonth : nowmonth);
+    var nowday = today.getDate();
+    nowday = (nowday < 10 ? '0'+nowday : nowday);
+
+    var nowdateparam =  = nowyear + '-' + nowmonth + '-' + nowday;
+    var nowhoursparam = today.getHours();
+
+    xhr.open('GET', 'calendar?nowdate='+nowdateparam+'&nowhours='+nowhoursparam);
     xhr.send();
 
     var dayinseconds = 24*60*60*1000; // hours*minutes*seconds*milliseconds
