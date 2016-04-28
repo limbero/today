@@ -51,5 +51,12 @@ document.onreadystatechange = function () {
     }
     xhr.open('GET', 'calendar');
     xhr.send();
+
+    var dayinseconds = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    var today = new Date();
+    var studsdate = new Date('2016-06-14');
+    var daystostuds = Math.ceil( (studsdate.getTime() - today.getTime()) / dayinseconds );
+
+    document.getElementById('studstimer').innerHTML = daystostuds + (daystostuds > 1 ? ' dagar' : ' dag') + ' kvar till studs';
   }
 };
