@@ -72,8 +72,10 @@ app.get('/calendar', function (req, res) {
 
         now = new Date(nowyear + '-' + nowmonth + '-' + nowday);
 
+        var nownow = new Date();
+
         //now.setDate(now.getDate()-1);
-        if (now.getHours() >= 22) {
+        if (nownow.getHours() >= 22) {
           now.setDate(now.getDate()+1);
         }
         var now_string = now.getFullYear() + '-' +
