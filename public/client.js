@@ -24,7 +24,7 @@ document.onreadystatechange = function () {
 
     if (today.getHours() >= 22) {
       tomorrow = true;
-      greetingtext += 'imorgon är det ' + weekdays[today.getDay()+1];
+      greetingtext += 'imorgon är det ' + weekdays[(today.getDay()+1)%7];
     } else {
       greetingtext += 'idag är det ' + weekdays[today.getDay()];
     }
