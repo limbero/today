@@ -66,6 +66,6 @@ document.onreadystatechange = function () {
     var studsdate = new Date('2016-06-14');
     var daystostuds = Math.ceil( (studsdate.getTime() - today.getTime()) / dayinseconds );
 
-    document.getElementById('studstimer').innerHTML = daystostuds + (daystostuds > 1 ? ' dagar' : ' dag') + ' kvar till studs';
+    document.getElementById('studstimer').innerHTML = 'oavsett, bara ' + daystostuds + (daystostuds > 1 ? ' dagar' : ' dag') + ' kvar till studs';
   }
 };
