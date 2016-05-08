@@ -55,6 +55,79 @@ app.get('/', function (req, res) {
   });
 });
 
+app.get('/weather', function (req, res) {
+  var olddate = new Date(parseInt(req.query.nowdate));
+  if (req.query.nowhours < 22) {
+    olddate.setDate(olddate.getDate()-1);
+  }
+
+  var oldbody = '';
+
+  request({
+    method: 'GET',
+    url: 'https://api.forecast.io/forecast/'+apikeys.forecast_io+'/'+req.query.lat+','+req.query.long+','+Math.floor(olddate.getTime()/1000)+'?units=si&lang=sv',
+    json: true
+  }, function (error, response, body) {
+    oldbody = body;
+    if (!error && response.statusCode === 200) {
+      oldbody = body;
+      if(newbody !== '') {
+        res.send(calculateweatherstuff(oldbody, newbody, req.query.nowhours));
+      }
+    } else {
+      oldbody = 'error';
+      if(newbody !== '') {
+        res.send('vädret är säkert skit');
+      }
+      console.log(response.statusCode, response.statusMessage);
+    }
+  });
+
+  var newdate = new Date(parseInt(req.query.nowdate));
+  if (req.query.nowhours < 22) {
+    newdate.setDate(newdate.getDate()-1);
+  }
+  newdate.setDate(newdate.getDate()+1);
+  var newbody = '';
+
+  request({
+    method: 'GET',
+    url: 'https://api.forecast.io/forecast/'+apikeys.forecast_io+'/'+req.query.lat+','+req.query.long+','+Math.floor(newdate.getTime()/1000)+'?units=si&lang=sv',
+    json: true
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      newbody = body;
+      if(oldbody !== '') {
+        res.send(calculateweatherstuff(oldbody, newbody, req.query.nowhours));
+      }
+    } else {
+      newbody = 'error';
+      if(oldbody !== '') {
+        res.send('vädret är säkert skit');
+      }
+      console.log(response.statusCode, response.statusMessage);
+    }
+  });
+});
+
+function calculateweatherstuff(oldbody, newbody, nowhours) {
+  var textsummary = newbody.hourly.summary.toLowerCase().slice(0, -1)+', ';
+  var tempdiff = Math.round(newbody.currently.temperature-oldbody.currently.temperature);
+  if(tempdiff < 0) {
+    textsummary += (-tempdiff)+' ';
+    textsummary += (tempdiff < -1 ? 'grader' : 'grad');
+    textsummary += ' kallare än ';
+  } else if(tempdiff > 0) {
+    textsummary += tempdiff+' ';
+    textsummary += (tempdiff > 1 ? 'grader' : 'grad');
+    textsummary += ' varmare än ';
+  } else {
+    textsummary += 'samma temperatur som ';
+  }
+  textsummary += (nowhours < 22 ? 'igår' : 'idag');
+  return textsummary;
+}
+
 app.get('/calendar', function (req, res) {
   mongo_db.collection('trakt_sessions', function(err, collection) {
     collection.findOne({session_id:req.session.id}, function(err, item) {

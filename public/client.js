@@ -36,7 +36,7 @@ document.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
         if (response === '' || response.length === 0) {
-          document.getElementById('tv').innerHTML = 'och ingenting på tv';
+          document.getElementById('tv').innerHTML = 'ingenting på tv';
         } else if (response.length === 1) {
           document.getElementById('tv').innerHTML = 'men du kan åtminstone glo på det nya avsnittet av ' + response[0].toLowerCase();
         } else {
@@ -48,7 +48,7 @@ document.onreadystatechange = function () {
           document.getElementById('tv').innerHTML = tvtext;
         }
       }
-    }
+    };
 
     var nowyear = today.getFullYear();
     var nowmonth = today.getMonth() + 1;
@@ -61,6 +61,22 @@ document.onreadystatechange = function () {
 
     xhr.open('GET', 'calendar?nowdate='+nowdateparam+'&nowhours='+nowhoursparam);
     xhr.send();
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log('location: lat='+position.coords.latitude+' long='+position.coords.longitude);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('weather').innerHTML = xhr.responseText;
+          }
+        };
+        xhr.open('GET', 'weather?lat='+position.coords.latitude+'&long='+position.coords.longitude+'&nowdate='+(new Date()).getTime()+'&nowhours='+nowhoursparam);
+        xhr.send();
+      });
+    } else {
+      document.getElementById('weather').innerHTML = 'vädret är nog skit';
+    }
 
     var dayinseconds = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var studsdate = new Date('2016-06-14');
