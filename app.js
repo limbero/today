@@ -92,7 +92,7 @@ app.get('/weather', function (req, res) {
 
   request({
     method: 'GET',
-    url: 'https://api.forecast.io/forecast/'+apikeys.forecast_io+'/'+req.query.lat+','+req.query.long+','+Math.floor(newdate.getTime()/1000)+'?units=si&lang=sv',
+    url: 'https://api.darksky.net/forecast/'+apikeys.forecast_io+'/'+req.query.lat+','+req.query.long+','+Math.floor(newdate.getTime()/1000)+'?units=si&lang=sv',
     json: true
   }, function (error, response, body) {
     if (!error && response.statusCode === 200) {
